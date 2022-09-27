@@ -14,7 +14,7 @@ class Block {
         
         stroke(this.clr=(random(0,i)), this.clr=(random(i,255)), this.clr=(random(i,255)), alpha+100);
         fill(0)
-        strokeWeight(1);
+        strokeWeight(2);
 
         circle(this.x, this.y, this.width, this.height);
         }
@@ -27,12 +27,12 @@ class Block {
 
         let xoff = 0.0;
         xoff = xoff + 0.01;
-        let n = noise(xoff)*4;
-
+        let n = noise(xoff)*2;
+        let perlin = (random(n*-1, n))
 
         //Move Using Perlin Noise
-        this.x = this.x+(random(n*-1, n));
-        this.y = this.y+(random(n*-1, n));
+        this.x = this.x+perlin;
+        this.y = this.y+perlin;
         
         //Wall Bounce
         if (this.y > (windowHeight - this.height) || this.y <=0) {
@@ -46,20 +46,20 @@ class Block {
         //Follow Food
         if (mouseX>this.x) { 
 
-            this.speedX = this.speedX+=.5+(random(n*-1, n));
+            this.speedX = this.speedX+=.5+perlin;
         }
         
         if (mouseX<this.x) {
-            this.speedX = this.speedX-=.5+(random(n*-1, n));
+            this.speedX = this.speedX-=.5+perlin;
         }
         
 
         if (mouseY>this.y) {
-            this.speedY = this.speedY+=.5+(random(n*-1, n));
+            this.speedY = this.speedY+=.5+perlin;
         }
 
         if (mouseY<this.y) {
-            this.speedY = this.speedY-=.5+(random(n*-1, n));
+            this.speedY = this.speedY-=.5+perlin;
         }
 
         }   
@@ -67,14 +67,24 @@ class Block {
       }     
 
 let blocks = [];
-let numBlocks = 10;
+let numBlocks = 1;
 let alpha = 0;
+let sze = 30;
 
 for (i=0; i<numBlocks; i++) {
-    blocks[i]= new Block(0,0,25,25,1,1,0);
+    blocks[i]= new Block(0,0,sze,sze,1,1,0);
 }
 
-blocks[30]= new Block(this.x,this.y,10,10,1,1,255)
+blocks[30]= new Block(this.x,this.y,this.width,this.height,1,1,255)
+
+
+
+function mouseClicked() {
+    numBlocks++
+    blocks[i]= new Block(mouseX,mouseY,sze,sze,.5,.5,0);
+    sze+perlin;;
+    return false;
+      }
 
 
 function setup() {
